@@ -4,7 +4,7 @@ NumberOfRepetitions = 100;
 bool_SuddenMovement = true;
 bool_SubjectSpecificMovement = true;
 
-std_rot = 0.25; % [°]
+std_rot = 0.25; % [Â°]
 std_trans = 0.25; % [mm]
 
 
@@ -131,7 +131,6 @@ while ii_repetition <= NumberOfRepetitions
     
     M_Corrupted = round(M_Corrupted);    
     for ii_offset = 1:NumberOfOffsets
-        %M_ref(:,:,:,ii_offset) = imwarp(M_Corrupted(:,:,:,ii_offset), R_spatial, invert(affine3d(T_hat(:,:,ii_offset))), 'FillValues', 0, 'OutputView', R_spatial);
         Segment_ref(:,:,:,ii_offset) = imwarp(Segment_Corrupted(:,:,:,ii_offset), R_spatial, invert(affine3d(T_hat(:,:,ii_offset))), 'FillValues', 0, 'OutputView', R_spatial);
     end
     
@@ -149,7 +148,7 @@ while ii_repetition <= NumberOfRepetitions
     MotionCorrectionResults = struct();
     
     
-    %try
+    try
     
     % No motion correction
     MotionCorrectionResults.Corrupted.M = M_Corrupted;
@@ -183,20 +182,20 @@ while ii_repetition <= NumberOfRepetitions
     MotionCorrectionResults.RPCA_PCA_R.Time = toc;
     
 
-%     catch
-%         disp('Error')
-%         continue
-%     end
+    catch
+        disp('Error')
+        continue
+    end
     
     %% Visualize results
     figure, hold on
     subplot(3,3,1),hold on, plot(d_x_hat,'Color','k'), box on, ylabel('{\Delta}x [mm]')
     subplot(3,3,2),hold on, plot(d_y_hat,'Color','k'), box on, ylabel('{\Delta}y [mm]')
     subplot(3,3,3),hold on, plot(d_z_hat,'Color','k'), box on, ylabel('{\Delta}z [mm]')
-    subplot(3,3,4),hold on, plot(theta_x_hat,'Color','k'), box on, ylabel('Pitch [°]')
-    subplot(3,3,5),hold on, plot(theta_y_hat,'Color','k'), box on, ylabel('Roll [°]')
-    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [°]')
-    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [°]')
+    subplot(3,3,4),hold on, plot(theta_x_hat,'Color','k'), box on, ylabel('Pitch [Â°]')
+    subplot(3,3,5),hold on, plot(theta_y_hat,'Color','k'), box on, ylabel('Roll [Â°]')
+    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [Â°]')
+    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [Â°]')
     subplot(3,3,9),hold on, plot(1,1,'Color','k'), box on, xticks([]), yticks([])
 
     Approaches = fieldnames(MotionCorrectionResults);
