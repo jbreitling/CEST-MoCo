@@ -12,6 +12,6 @@ This toolbox contains code for the following papers:
 
 Breitling J, Korzowski A, Kempa N, Boyd PS, Ladd ME, Bachert P, Goerke S. Motion correction for 3D CEST imaging without direct water saturation artifacts. XXX
 
-Welcome your comments and suggestions.
+We welcome your comments and suggestions.
 
 April 14, 2021
