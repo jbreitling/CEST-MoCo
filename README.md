@@ -10,7 +10,7 @@ Matlab version: 9.7.0.1261785 (R2019b) Update 3
 
 This toolbox contains code for the following papers:
 
-Breitling J, Korzowski A, Kempa N, Boyd PS, Ladd ME, Bachert P, Goerke S. Motion correction for 3D CEST imaging without direct water saturation artifacts. Manuscript submitted for publication (2021).
+Breitling J*, Korzowski A, Kempa N, Boyd PS, Ladd ME, Bachert P, Goerke S. Motion correction for 3D CEST imaging without direct water saturation artifacts. Manuscript submitted for publication (2021).
 
 We welcome your comments and suggestions.
 
