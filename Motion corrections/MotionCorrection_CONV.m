@@ -32,7 +32,6 @@ function [M_CoReg, T] = MotionCorrection_CONV(M_Corrupted,Slices,path_target_DIC
     mkdir(path_MoCo_DICOM);
     
     % Set algorhitm: mdra-0-13_ITKRigidSlabbedHead = Mattes mutual information
-    %                XXX = XXX
     path_RegistrationAlgorhithm = [filepath '\MITK\mdra-0-13_ITKRigidSlabbedHead.dll'];
 
     
