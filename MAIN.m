@@ -13,9 +13,9 @@ cd(fileparts(which(mfilename)))
 addpath('.\General functionality')
 addpath('.\Motion corrections')
 
-load('.\Data\GroundTruth_3T.mat')
+load('.\Data\GroundTruth_Info.mat')
 
-NumberOfOffsets = size(M_GroundTruth, 4);
+NumberOfOffsets = size(UseableImage_GroundTruth, 4);
 
 % The quantification results for the different metrics and approaches will
 % be saved in a struct for each repetition
@@ -27,6 +27,8 @@ QuantificationResults = struct();
 ii_repetition = 1;
 while ii_repetition <= NumberOfRepetitions
 
+    % load one of the ten groundtruth datasets
+    load(['.\Data\GroundTruth_' num2str(mod(ii_repetition-1,10)+1) '.mat'])
     
     clearvars -except QuantificationResults M_GroundTruth Segment_GroundTruth R_spatial UseableImage_GroundTruth NumberOfRepetitions NumberOfOffsets bool_SuddenMovement bool_SubjectSpecificMovement std_rot std_trans ii_repetition
 
@@ -192,10 +194,10 @@ while ii_repetition <= NumberOfRepetitions
     subplot(3,3,1),hold on, plot(d_x_hat,'Color','k'), box on, ylabel('{\Delta}x [mm]')
     subplot(3,3,2),hold on, plot(d_y_hat,'Color','k'), box on, ylabel('{\Delta}y [mm]')
     subplot(3,3,3),hold on, plot(d_z_hat,'Color','k'), box on, ylabel('{\Delta}z [mm]')
-    subplot(3,3,4),hold on, plot(theta_x_hat,'Color','k'), box on, ylabel('Pitch [Â°]')
-    subplot(3,3,5),hold on, plot(theta_y_hat,'Color','k'), box on, ylabel('Roll [Â°]')
-    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [Â°]')
-    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [Â°]')
+    subplot(3,3,4),hold on, plot(theta_x_hat,'Color','k'), box on, ylabel('Pitch [°]')
+    subplot(3,3,5),hold on, plot(theta_y_hat,'Color','k'), box on, ylabel('Roll [°]')
+    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [°]')
+    subplot(3,3,6),hold on, plot(theta_z_hat,'Color','k'), box on, ylabel('Yaw [°]')
     subplot(3,3,9),hold on, plot(1,1,'Color','k'), box on, xticks([]), yticks([])
 
     Approaches = fieldnames(MotionCorrectionResults);
@@ -268,7 +270,7 @@ while ii_repetition <= NumberOfRepetitions
         d_RMS = max(d_RMS_i);
         
         % Append the quantification results to the previous results
-        if ii_repetition == 1
+        if ~isfield(QuantificationResults,Approaches{ii_approach})
             QuantificationResults.(Approaches{ii_approach}).NRMSE = NRMSE;
             QuantificationResults.(Approaches{ii_approach}).d_RMS = d_RMS;
             QuantificationResults.(Approaches{ii_approach}).Time = MotionCorrectionResults.(Approaches{ii_approach}).Time;
@@ -283,7 +285,7 @@ while ii_repetition <= NumberOfRepetitions
         subplot(3,3,8),hold on, plot(NRMSE_i*100,'Color',colors(ii_approach,:));xlim([1 NumberOfOffsets]), box on, ylabel('NRMSE_{i} [%]')
         
         if isfield(MotionCorrectionResults.(Approaches{ii_approach}), 'Iteration')
-            if ii_repetition == 1
+            if ~isfield(QuantificationResults.(Approaches{ii_approach}),'Iteration')
                 QuantificationResults.(Approaches{ii_approach}).Iteration = MotionCorrectionResults.(Approaches{ii_approach}).Iteration;
             else
                 QuantificationResults.(Approaches{ii_approach}).Iteration(end+1) = MotionCorrectionResults.(Approaches{ii_approach}).Iteration;
@@ -317,7 +319,7 @@ for ii_metric = 1:numel(Metrics)
         plotData(1:(numel(temp)),ii_approach) = temp;
     end
 
-    boxplot(plotData,'Whisker',1.5,'notch','off','Colors',colors,'Widths',0.7,'jitter',0.3,'Symbol','k+');
+    boxplot(plotData,'Whisker',100,'notch','off','Colors',colors,'Widths',0.7,'jitter',0.3,'Symbol','k+');
     
     h = findobj(gca,'Tag','Box');
     for j=1:length(h)
