@@ -12,8 +12,8 @@ Required Matlab toolboxes: Image Processing Toolbox, Statistics and Machine Lear
 
 This toolbox contains code for the following paper:
 
-Breitling J*, Korzowski A, Kempa N, Boyd PS, Ladd ME, Bachert P, Goerke S. Motion correction for 3D CEST imaging without direct water saturation artifacts. Manuscript submitted for publication (2021).
+Breitling J*, Korzowski A, Kempa N, Boyd PS, Paech D, Schlemmer HP, Ladd ME, Bachert P, Goerke S. Motion correction for 3D CEST imaging without direct water saturation artifacts. Manuscript submitted for publication (2021).
 
 We welcome your comments and suggestions.
 
-April 14, 2021
+June 29, 2021
